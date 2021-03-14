@@ -1,0 +1,20 @@
+---
+- name: Copy Ssh key
+  hosts: all
+  become: true
+  become_method: "ansadmin"
+  tasks:
+     - name: make direcotry
+       file:
+         path: "/home/<ansadmin>/.ssh"
+         state: directory
+
+     - name: create empty file
+       file:
+         path: "/home/<ansadmin>/.ssh/authorized_keys"
+         state: touch
+
+     - name: put pubkey
+       lineinfile:
+          path: "/home/<ansadmin>/.ssh/authorized_keys"
+          line: "{{ pubkey }}"

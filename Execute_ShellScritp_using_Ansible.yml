@@ -1,0 +1,15 @@
+---
+- name: Transfer and execute a script.
+  hosts: 192.168.0.52
+  become: yes 
+  become_method: sudo
+  become_user: root 
+  gather_facts: yee
+
+  tasks:
+     - name: Transfer the script
+       copy: src=/home/ansadmin/Scripts/Deploy_zabbix_agent.sh dest=/home/ansadmin mode=0777
+
+     - name: Execute the script
+       command: sudo sh /home/ansadmin/Deploy_zabbix_agent.sh
+...

@@ -1,0 +1,18 @@
+---
+# Variables below are for creation on local servers if groups do not exist.
+# Add developer_group for any new groups that will be used in the user listing.
+# Otherwise, playbook will fail because group does not exist during addition to groups.
+
+groups:
+  - group: whell
+
+users:
+#  - username: nguyenh                                      # UserID to be created
+#    user_comment: Ho Nguyen                                # First_Name Last_Name
+#    user_groups: developer_limited, developer_unlimited    # Group memberships (e.g. "group1" or "group1, group2")
+#    user_password: Ch@ngeM3N0w!                            # Initial password for user in plain text.  Module will encrypt.
+
+  - username: nono
+    user_comment: nono fon
+    user_groups: whell 
+    user_password: 12345

@@ -1,0 +1,37 @@
+---
+- hosts: testserver
+  gather_facts: no
+  become: true
+  become_user: root
+  vars_files:
+   - /vars/Ansible_Playbook_Create_Users_Users_informations.txt.yml
+  tasks:
+
+    - name: Create "{{ item.user_comment }} ({{item.username}}" if not present
+      user:
+        name: "{{ item.username }}"
+        comment: "{{ item.user_comment }}"
+        shell: /bin/bash
+        groups: "{{ item.user_groups }}"
+        state: present
+        append: yes
+        createhome: yes
+        #expires: -1
+        password: "{{ item.user_password | password_hash('sha512') }}"
+        update_password: on_create
+      with_items: "{{ users }}"
+      tags:
+       - cuser
+
+    - name: make the password to expire immediately
+      command: "chage -d0 {{ item.username }}"
+      with_items:
+        - "{{ users }}"
+      tags:
+       - expire
+
+#Make all password expire in the next 180
+   # - name: set password expiry date for all users in developer_limited and unlimited to 180 days
+   #   script: /home/ansibleadmin/set_password_expiry.sh
+   #   tags:
+   #    - set_epass

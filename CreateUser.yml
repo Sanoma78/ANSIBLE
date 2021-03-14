@@ -1,0 +1,19 @@
+---
+- name: create user & add user to a group exited
+  hosts: all
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: add a user papa
+      user:  
+       name: ansadmin
+       comment: papa mom
+       create_home: no
+#       password: "{{ default_user_password | password_hash('sha512', 'A512') }}"
+       shell: /bin/bash
+
+    - name: add a group called wheel
+      group: 
+        name: wheel
+        state: present

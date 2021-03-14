@@ -1,0 +1,39 @@
+---
+- name: Update Servers
+  hosts: all
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks: 
+  
+  - name: update the system
+    yum:
+      name: "*"
+      state: latest
+    register: yum_updates
+
+#  - debug:
+#      var: yum_updates.changes.updated
+#
+#  - name: restart system to reboot to newest kernel
+#    shell: "sleep 5 && reboot"
+#    async: 1
+#    poll: 0
+#
+#  - name: wait for 30 seconds
+#    pause:
+#       seconds: 60
+#
+#  - name: wait for the system to reboot
+#    wait_for_connection:
+#       connect_timeout: 60
+#       sleep: 15
+#       delay: 15
+#       timeout: 60
+#
+#  - name: install epel-release
+#    yum:
+#       name: epel-release
+#       state: latest
+#
+...
