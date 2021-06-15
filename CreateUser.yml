@@ -2,17 +2,20 @@
 - name: create user & add user to a group exited
   hosts: vmtest
   become: true
-  become_method: sudo
-  become_user: root
   tasks:
     - name: add a user toto
       user:  
-       name: ansadmin
+       name: madhead
        comment: toto mom
        create_home: no
-#       password: "{{ default_user_password | password_hash('sha512', 'A512') }}"
-       shell: /bin/bash
-
+       password: "{{ yourpassword | password_hash('sha512',) }}"  
+    - shell: /bin/shell
+      update_password: on_create
+      register: madhead
+   - name: Force madhead to change password
+     shell: chage -d 0 madhead
+     when: madhead.changed
+  
     - name: add a group called wheel
       group: 
         name: wheel
