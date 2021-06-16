@@ -8,13 +8,13 @@
        name: madhead
        comment: toto mom
        create_home: no
-       password: "{{ yourpassword | password_hash('sha512',) }}"  
+       password: "{{ yourpassword | password_hash('sha512') }}"  
     - shell: /bin/shell
       update_password: on_create
       register: madhead
-   - name: Force madhead to change password
-     shell: chage -d 0 madhead
-     when: madhead.changed
+    - name: Force madhead to change password
+      shell: chage -d 0 madhead
+      when: madhead.changed
   
     - name: add a group called wheel
       group: 
