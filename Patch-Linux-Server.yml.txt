@@ -1,0 +1,23 @@
+----
+ - name: Playbook to Patch Linux Server
+   hosts: all
+   become: true
+   gather_facts: no
+   tasks:
+     - name: Upgrade all packages
+       yum:
+         name: '*'
+         state: latest
+
+     - name: Check the uptime prior reboot
+       shell: uptime
+       register: UPTIME_PRE_REBOOT
+
+     - debug: msg={{UPTIME_PRE_REBOOT.stdout}}
+
+     - name: reboot host(s)
+       ansible.builtin.reboot:
+          msg: "reboot by Ansible"
+          pre_reboot_delay: 5
+          post_reboot_delay: 10
+          test_command: "whoami"
